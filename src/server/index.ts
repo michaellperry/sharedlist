@@ -1,7 +1,8 @@
-const express = require('express');
-const http = require('http');
-const { json } = require('body-parser');
-const { configureRoutes } = require('./routes');
+import express from "express";
+import http from "http";
+import { json } from "body-parser";
+import { configureRoutes } from "./routes";
+
 const { configureJinaga } = require('./jinaga');
 
 const app = express();
