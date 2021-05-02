@@ -16,7 +16,8 @@
   "dependencies": {
     "express": "^4.17.1",
     "jinaga": "^2.5.2",
-    "requirejs": "^2.3.6"
+    "webpack": "^5.36.2",
+    "webpack-cli": "^4.6.0"
   },
   "devDependencies": {
     "@types/jest": "^26.0.23",
