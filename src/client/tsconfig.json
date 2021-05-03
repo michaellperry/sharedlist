@@ -1,0 +1,22 @@
+{
+    "compilerOptions": {
+        "target": "es6",
+        "module": "es6",
+        "outDir": "../../dist",
+        "strict": true,
+        "esModuleInterop": true,
+        "moduleResolution": "node",
+        "sourceMap": true,
+        "jsx": "react",
+        "paths": {
+            "@shared/*": [
+                "../shared/*"
+            ]
+        },
+        "allowSyntheticDefaultImports": true,
+        "allowJs": true
+    },
+    "lib": [
+        "es2015"
+    ]
+}

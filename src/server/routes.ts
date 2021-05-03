@@ -6,5 +6,8 @@ export function configureRoutes(app: express.Express) {
         res.sendFile(path.join(__dirname, "main.html"));
     });
 
-    app.use('/scripts', express.static(path.join(__dirname, "scripts")));
+    app.use('/scripts', express.static(
+        path.join(__dirname, "..", "scripts"),
+        { maxAge: "365d" }
+    ));
 }

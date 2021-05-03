@@ -1,4 +1,4 @@
-import { JinagaBrowser } from "jinaga/dist/jinaga";
+import { JinagaBrowser } from "jinaga";
 
 const j = JinagaBrowser.create({
     httpEndpoint: "/jinaga"

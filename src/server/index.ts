@@ -2,6 +2,7 @@ import express from "express";
 import http from "http";
 import { json } from "body-parser";
 import { configureRoutes } from "./routes";
+import {} from "@shared/model";
 
 const { configureJinaga } = require('./jinaga');
 

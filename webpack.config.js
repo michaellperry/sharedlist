@@ -4,7 +4,14 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 module.exports = {
     // Inputs
     entry: {
-        main: "./src/client/main.js"
+        main: "./src/client/main.ts"
+    },
+    resolve: {
+        extensions: [".js", ".ts"],
+        alias: {
+            "@shared": path.resolve(__dirname, "./src/shared"),
+            "jinaga": "jinaga/dist/jinaga",
+        }
     },
 
     // Processing
@@ -13,9 +20,20 @@ module.exports = {
         new HtmlWebpackPlugin({
             template: "./src/server/index.html",
             publicPath: "/scripts/",
-            filename: "../[name].html",
+            filename: "../server/[name].html",
         }),
     ],
+    module: {
+        rules: [{
+            test: /\.ts$/,
+            loader: "ts-loader",
+            include: [
+                path.resolve(__dirname, "./src/client"),
+                path.resolve(__dirname, "./src/shared")
+            ],
+            exclude: [/node_modules/]
+        }]
+    },
 
     // Outputs
     output: {
