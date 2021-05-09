@@ -74,6 +74,13 @@ export class Item {
         return j.match(<Item>{
             type: Item.Type,
             list
+        }).suchThat(Item.isNotCompleted);
+    }
+
+    static isNotCompleted(item: Item) {
+        return j.notExists(<Completed>{
+            type: Completed.Type,
+            item
         });
     }
 
@@ -83,10 +90,25 @@ export class Item {
     }
 }
 
+export class Completed {
+    static Type = "SharedList.Item.Completed";
+    type = Completed.Type;
+
+    constructor(
+        public item: Item
+    ) { }
+
+    static item(completed: Completed) {
+        ensure(completed).has("item");
+        return j.match(completed.item);
+    }
+}
+
 export function authorize(a: AuthorizationRules) {
     return a
         .any(User.Type)
         .type(List.Type, j.for(List.creator))
         .type(Item.Type, j.for(Item.list).then(List.creator))
+        .type(Completed.Type, j.for(Completed.item).then(Item.list).then(List.creator))
         ;
 }
