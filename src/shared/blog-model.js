@@ -29,6 +29,11 @@ Post.byAuthor = function(author) {
     });
 };
 
+Post.author = function(post) {
+    ensure(post).has("author");
+    return j.match(post.author);
+}
+
 class Tag {
     constructor (
         name
@@ -64,9 +69,24 @@ PostTags.tags = function(postTags) {
     return j.match(postTags.tags);
 };
 
+PostTags.post = function(postTags) {
+    ensure (postTags).has("post");
+    return j.match(postTags.post);
+}
+
+function authorize(a) {
+    return (a
+        .any(User.Type)
+        .type(Post.Type, j.for(Post.author))
+        .any(Tag.Type)
+        .type(PostTags.Type, j.for(PostTags.post).then(Post.author))
+    );
+}
+
 module.exports = {
     User,
     Post,
     Tag,
-    PostTags
+    PostTags,
+    authorize
 };
