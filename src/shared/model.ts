@@ -60,9 +60,33 @@ export class List {
     }
 }
 
+export class Item {
+    static Type = "SharedList.Item";
+    type = Item.Type;
+
+    constructor(
+        public list: List,
+        public description: string,
+        public created: Date | string
+    ) { }
+
+    static inList(list: List) {
+        return j.match(<Item>{
+            type: Item.Type,
+            list
+        });
+    }
+
+    static list(item: Item) {
+        ensure(item).has("list");
+        return j.match(item.list);
+    }
+}
+
 export function authorize(a: AuthorizationRules) {
     return a
         .any(User.Type)
         .type(List.Type, j.for(List.creator))
+        .type(Item.Type, j.for(Item.list).then(List.creator))
         ;
 }

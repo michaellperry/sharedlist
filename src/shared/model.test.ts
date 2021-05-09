@@ -1,5 +1,5 @@
 import { Jinaga, JinagaTest } from "jinaga";
-import { authorize, List, User } from "./model";
+import { authorize, Item, List, User } from "./model";
 
 var j: Jinaga;
 
@@ -24,3 +24,23 @@ test("Can get all lists that a user has created", async () => {
     const lists = await j.query(creator, j.for(List.fromCreator));
     expect(lists.length).toBe(1);
 });
+
+test("Can add an item to a list", async () => {
+    const { userFact: creator } = await j.login<User>();
+    const list = await j.fact(new List(creator));
+
+    const item = await j.fact(new Item(list, "Write your first test", new Date()));
+    expect(item.description).toBe("Write your first test");
+});
+
+test("Can get all items on a list", async () => {
+    const { userFact: creator } = await j.login<User>();
+    const list = await j.fact(new List(creator));
+    await j.fact(new Item(list, "Write your first test", new Date()));
+    await j.fact(new Item(list, "Write another one", new Date()));
+
+    const items = await j.query(list, j.for(Item.inList));
+    expect(items.length).toBe(2);
+    expect(items[0].description).toBe("Write your first test");
+    expect(items[1].description).toBe("Write another one");
+})
