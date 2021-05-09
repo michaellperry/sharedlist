@@ -9,7 +9,8 @@
   "scripts": {
     "build": "webpack && tsc --project src/server",
     "start": "node dist/server/index",
-    "test": "jest"
+    "test": "jest",
+    "test:watch": "jest --watch"
   },
   "author": "Michael L Perry",
   "license": "MIT",
