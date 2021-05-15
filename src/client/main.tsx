@@ -1,11 +1,7 @@
-import { JinagaBrowser } from "jinaga";
-import { App } from "./app";
 import * as React from "react";
 import * as ReactDOM from "react-dom";
-
-const j = JinagaBrowser.create({
-    httpEndpoint: "/jinaga"
-});
+import { App } from "./app";
+import { j } from "./jinaga-config";
 
 j.fact({
     type: "MyApplication.Visit",
