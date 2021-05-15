@@ -5,9 +5,15 @@ export const HomePage = ({}) => {
     const [ topic, setTopic ] = React.useState("");
     const history = useHistory();
 
+    const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+        history.push(`/${topic}`);
+    };
+
     return (
-        <form onSubmit={e => history.push(`/${topic}`)}>
-            <label title="Topic">
+        <form onSubmit={onSubmit}>
+            <label>
+                Topic
                 <input type="text"
                     value={topic}
                     onChange={e => setTopic(e.target.value)}
