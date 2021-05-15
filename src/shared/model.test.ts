@@ -1,41 +1,27 @@
 import { Jinaga, JinagaTest } from "jinaga";
-import { authorize, Completed, Item, List, User } from "./model";
+import { Completed, Item, List } from "./model";
 
 var j: Jinaga;
 
 beforeEach(() => {
-    j = JinagaTest.create({
-        authorization: authorize,
-        user: new User("---List Creator---")
-    });
+    j = JinagaTest.create({});
 });
 
 test("Can create a list", async () => {
-    const creator = await j.fact(new User("---List Creator---"));
-    const list = await j.fact(new List(creator));
+    const list = await j.fact(new List("topic"));
 
-    expect(list.creator.publicKey).toBe("---List Creator---");
-});
-
-test("Can get all lists that a user has created", async () => {
-    const creator = await j.fact(new User("---List Creator---"));
-    const list = await j.fact(new List(creator));
-
-    const lists = await j.query(creator, j.for(List.fromCreator));
-    expect(lists.length).toBe(1);
+    expect(list.topic).toBe("topic");
 });
 
 test("Can add an item to a list", async () => {
-    const { userFact: creator } = await j.login<User>();
-    const list = await j.fact(new List(creator));
+    const list = await j.fact(new List("topic"));
 
     const item = await j.fact(new Item(list, "Write your first test", new Date()));
     expect(item.description).toBe("Write your first test");
 });
 
 test("Can get all items on a list", async () => {
-    const { userFact: creator } = await j.login<User>();
-    const list = await j.fact(new List(creator));
+    const list = await j.fact(new List("topic"));
     await j.fact(new Item(list, "Write your first test", new Date()));
     await j.fact(new Item(list, "Write another one", new Date()));
 
@@ -46,8 +32,7 @@ test("Can get all items on a list", async () => {
 });
 
 test("Can mark a test as complete", async () => {
-    const { userFact: creator } = await j.login<User>();
-    const list = await j.fact(new List(creator));
+    const list = await j.fact(new List("topic"));
     const item = await j.fact(new Item(list, "Write your first test", new Date()));
 
     const completed = await j.fact(new Completed(item));
@@ -55,8 +40,7 @@ test("Can mark a test as complete", async () => {
 });
 
 test("Completed items do not appear on the list", async () => {
-    const { userFact: creator } = await j.login<User>();
-    const list = await j.fact(new List(creator));
+    const list = await j.fact(new List("topic"));
     const item = await j.fact(new Item(list, "Write your first test", new Date()));
     await j.fact(new Item(list, "Write another one", new Date()));
     await j.fact(new Completed(item));
