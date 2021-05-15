@@ -1,5 +1,17 @@
 import * as React from "react";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import { HomePage } from "./home/home-page";
+import { ListPage } from "./list/list-page";
 
 export const App = ({}) => (
-    <p>Hello, World! So glad you could make it.</p>
+    <Router>
+        <Switch>
+            <Route path="/:topic">
+                <ListPage />
+            </Route>
+            <Route path="/">
+                <HomePage />
+            </Route>
+        </Switch>
+    </Router>
 );

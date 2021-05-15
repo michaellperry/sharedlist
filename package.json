@@ -19,13 +19,15 @@
     "jinaga": "^2.5.2",
     "jinaga-react": "^2.2.0",
     "react": "^16.14.0",
-    "react-dom": "^16.14.0"
+    "react-dom": "^16.14.0",
+    "react-router-dom": "^5.2.0"
   },
   "devDependencies": {
     "@types/express": "^4.17.11",
     "@types/jest": "^26.0.23",
     "@types/react": "^16.14.6",
     "@types/react-dom": "^16.9.12",
+    "@types/react-router-dom": "^5.1.7",
     "html-webpack-plugin": "^5.3.1",
     "jest": "^26.6.3",
     "ts-jest": "^26.5.5",
