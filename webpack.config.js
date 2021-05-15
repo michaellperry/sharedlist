@@ -4,10 +4,10 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 module.exports = {
     // Inputs
     entry: {
-        main: "./src/client/main.ts"
+        main: "./src/client/main.jsx"
     },
     resolve: {
-        extensions: [".js", ".ts"],
+        extensions: [".js", ".ts", ".jsx", ".tsx"],
         alias: {
             "@shared": path.resolve(__dirname, "./src/shared"),
             "jinaga": "jinaga/dist/jinaga",
@@ -25,13 +25,24 @@ module.exports = {
     ],
     module: {
         rules: [{
-            test: /\.ts$/,
+            test: /\.tsx?$/,
             loader: "ts-loader",
             include: [
                 path.resolve(__dirname, "./src/client"),
                 path.resolve(__dirname, "./src/shared")
             ],
             exclude: [/node_modules/]
+        }, {
+            test: /\.jsx?$/,
+            loader: "babel-loader",
+            include: [
+                path.resolve(__dirname, "./src/client"),
+                path.resolve(__dirname, "./src/shared")
+            ],
+            exclude: [/node_modules/],
+            options: {
+                presets: [ "@babel/preset-react" ]
+            }
         }]
     },
 
