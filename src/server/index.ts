@@ -4,7 +4,7 @@ import { json } from "body-parser";
 import { configureRoutes } from "./routes";
 import {} from "@shared/model";
 
-const { configureJinaga } = require('./jinaga');
+const { configureJinaga } = require('./jinaga-config');
 
 const app = express();
 const server = http.createServer(app);
