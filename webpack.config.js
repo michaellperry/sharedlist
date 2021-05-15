@@ -25,24 +25,13 @@ module.exports = {
     ],
     module: {
         rules: [{
-            test: /\.tsx?$/,
+            test: /\.(t|j)sx?$/,
             loader: "ts-loader",
             include: [
                 path.resolve(__dirname, "./src/client"),
                 path.resolve(__dirname, "./src/shared")
             ],
             exclude: [/node_modules/]
-        }, {
-            test: /\.jsx?$/,
-            loader: "babel-loader",
-            include: [
-                path.resolve(__dirname, "./src/client"),
-                path.resolve(__dirname, "./src/shared")
-            ],
-            exclude: [/node_modules/],
-            options: {
-                presets: [ "@babel/preset-react" ]
-            }
         }]
     },
 
