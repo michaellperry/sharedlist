@@ -20,7 +20,7 @@ module.exports = {
         new HtmlWebpackPlugin({
             template: "./src/server/index.html",
             publicPath: "/scripts/",
-            filename: "../server/index.html",
+            filename: "../server/[name].html",
         }),
     ],
     module: {
