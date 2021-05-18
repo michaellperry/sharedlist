@@ -6,7 +6,12 @@
       "strict": true,
       "esModuleInterop": true,
       "skipLibCheck": true,
-      "forceConsistentCasingInFileNames": true
+      "forceConsistentCasingInFileNames": true,
+      "paths": {
+          "@shared/*": [
+              "../shared/*"
+          ]
+      }
   },
   "exclude": [
       "**/*.test.ts"
