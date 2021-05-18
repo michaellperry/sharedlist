@@ -9,7 +9,7 @@
   "scripts": {
     "clean": "rimraf dist/",
     "build": "webpack && tsc --project src/server",
-    "start": "node dist/server/index",
+    "start": "node dist/server/server",
     "test": "jest",
     "test:watch": "jest --watch"
   },
