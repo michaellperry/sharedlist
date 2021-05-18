@@ -2,16 +2,11 @@
   "compilerOptions": {
       "target": "es6",
       "module": "commonjs",
-      "outDir": "../../dist",
+      "outDir": "../../dist/server",
       "strict": true,
       "esModuleInterop": true,
       "skipLibCheck": true,
-      "forceConsistentCasingInFileNames": true,
-      "paths": {
-          "@shared/*": [
-              "../shared/*"
-          ]
-      }
+      "forceConsistentCasingInFileNames": true
   },
   "exclude": [
       "**/*.test.ts"
