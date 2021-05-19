@@ -9,7 +9,7 @@ export const ListPage = ({}) => {
     return (
         <>
             <Link to="/">Home</Link>
-            <ListContainer fact={new List(topic)} />
+            <ListContainer fact={new List(decodeURI(topic))} />
         </>
     );
 };

@@ -7,20 +7,24 @@ export const HomePage = ({}) => {
 
     const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        history.push(`/${topic}`);
+        history.push(`/${encodeURI(topic.toLowerCase())}`);
     };
 
     return (
-        <form onSubmit={onSubmit}>
-            <label>
-                Topic
-                <input type="text"
-                    value={topic}
-                    onChange={e => setTopic(e.target.value)}
-                />
-            </label>
-            <br />
-            <input type="submit" value="Go" />
-        </form>
+        <>
+            <h2>Create and share lists</h2>
+            <p>Enter a topic to create and join a list.</p>
+            <form onSubmit={onSubmit}>
+                <label>
+                    Topic
+                    <input type="text"
+                        value={topic}
+                        onChange={e => setTopic(e.target.value)}
+                    />
+                </label>
+                <br />
+                <input type="submit" value="Go" />
+            </form>
+        </>
     );
 };
