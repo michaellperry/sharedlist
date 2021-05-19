@@ -23,11 +23,18 @@ export class Item {
         return j.match(<Item>{
             type: Item.Type,
             list
-        }).suchThat(Item.isNotCompleted);
+        }).suchThat(j.not(Item.isCompleted));
     }
 
-    static isNotCompleted(item: Item) {
-        return j.notExists(<Completed>{
+    static inCompletedList(list: List) {
+        return j.match(<Item>{
+            type: Item.Type,
+            list
+        }).suchThat(Item.isCompleted);
+    }
+
+    static isCompleted(item: Item) {
+        return j.exists(<Completed>{
             type: Completed.Type,
             item
         });
