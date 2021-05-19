@@ -14,9 +14,10 @@ export const ListContainer = jinagaContainer(j, mapProps(listProjection).to(
     ({list, topic, Items}) => {
         const [description, setDescription] = React.useState("");
 
-        const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+        const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
             e.preventDefault();
-            j.fact(new Item(list, description, new Date()));
+            await j.fact(new Item(list, description, new Date()));
+            setDescription("");
         };
 
         return (

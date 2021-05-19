@@ -11,10 +11,12 @@ const itemProjection = projectionFor(Item, {
 export const itemComponent = mapProps(itemProjection).to(
     ({item, description}) => (
         <div>
-            <input type="checkbox"
-                onChange={e => j.fact(new Completed(item))}
-            />
-            <p>{description}</p>
+            <label>
+                <input type="checkbox"
+                    onChange={e => j.fact(new Completed(item))}
+                />
+                {description}
+            </label>
         </div>
     )
 );
