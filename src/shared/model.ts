@@ -58,4 +58,11 @@ export class Completed {
         ensure(completed).has("item");
         return j.match(completed.item);
     }
+
+    static forItem(item: Item) {
+        return j.match(<Completed>{
+            type: Completed.Type,
+            item
+        });
+    }
 }
