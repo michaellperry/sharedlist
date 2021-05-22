@@ -1,5 +1,5 @@
 import { JinagaBrowser } from "jinaga";
 
 export const j = JinagaBrowser.create({
-    httpEndpoint: "/jinaga"
+    httpEndpoint: "https://jinaga-sharedlist.azurewebsites.net/jinaga"
 });
