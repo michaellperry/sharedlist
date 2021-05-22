@@ -1,4 +1,5 @@
 import { json } from "body-parser";
+import cors from "cors";
 import express from "express";
 import http from "http";
 import { configureJinaga } from "./jinaga-config";
@@ -9,6 +10,7 @@ const server = http.createServer(app);
 
 app.set("port", process.env.PORT || 8080);
 app.use(json());
+app.use(cors());
 
 configureRoutes(app);
 configureJinaga(app);
