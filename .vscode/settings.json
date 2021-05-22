@@ -1,0 +1,8 @@
+{
+    "appService.zipIgnorePattern": [
+        "node_modules{,/**}",
+        ".vscode{,/**}"
+    ],
+    "appService.defaultWebAppToDeploy": "/subscriptions/df4e314e-aec9-4ad4-926d-6ddb513c6de5/resourceGroups/DeveloperApps/providers/Microsoft.Web/sites/jinaga-sharedlist",
+    "appService.deploySubpath": "dist"
+}
