@@ -10,8 +10,12 @@ export const ListPage = ({}) => {
     const list = new List(decodeURI(topic));
 
     React.useEffect(() => {
-        const itemSubscription = j.subscribe(list, j.for(Item.inList));
-        const completedSubscription = j.subscribe(list, j.for(Item.inCompletedList).then(Completed.forItem));
+        const itemSubscription = j.subscribe(list, j
+            .for(Item.inList));
+        const completedSubscription = j.subscribe(list, j
+            .for(Item.inCompletedList)
+            .then(Completed.forItem));
+            
         return () => {
             itemSubscription.stop();
             completedSubscription.stop();
