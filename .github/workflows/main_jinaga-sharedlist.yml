@@ -19,11 +19,18 @@ jobs:
     - name: Set up Node.js version
       uses: actions/setup-node@v1
       with:
-        node-version: '14.x'
+        node-version: '16.x'
+
+    - name: Cache dependencies
+      uses: actions/cache@v2
+      with:
+        path: ~/.npm
+        key: npm-${{ hashFiles('package-lock.json') }}
+        restore-keys: npm-
 
     - name: npm install, build, and test
       run: |
-        npm install
+        npm ci --ignore-scripts
         npm run build --if-present
         npm run test --if-present
 
