@@ -15,6 +15,12 @@ npm start
 
 Then navigate to [http://localhost:8080](http://localhost:8080).
 
+To automatically rebuild during development:
+
+```bash
+npm run dev
+```
+
 ## Walkthrough
 
 This application demonstrates some key points in Jinaga.
