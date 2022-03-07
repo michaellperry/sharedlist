@@ -41,7 +41,7 @@ export class Item {
     }
 
     static list(item: Item) {
-        ensure(item).has("list");
+        ensure(item).has("list", List);
         return j.match(item.list);
     }
 }
@@ -55,7 +55,7 @@ export class Completed {
     ) { }
 
     static item(completed: Completed) {
-        ensure(completed).has("item");
+        ensure(completed).has("item", Item);
         return j.match(completed.item);
     }
 
