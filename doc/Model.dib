@@ -1,0 +1,35 @@
+#!csharp
+
+#r "nuget: Jinaga"
+#r "nuget: Jinaga.UnitTest"
+#r "nuget: Jinaga.Graphviz"
+
+#!csharp
+
+using Jinaga;
+using Jinaga.UnitTest;
+using Jinaga.Graphviz;
+
+var j = JinagaTest.Create();
+
+#!csharp
+
+[FactType("SharedList.List")]
+record List(string topic) {}
+
+[FactType("SharedList.Item")]
+record Item(List list, string description, DateTime created) {}
+
+[FactType("SharedList.Item.Completed")]
+record Completed(Item item) {}
+
+#!csharp
+
+var villains = await j.Fact(new List("villains"));
+var daleks = await j.Fact(new Item(villains, "Daleks", DateTime.Now));
+var cybermen = await j.Fact(new Item(villains, "Cybermen", DateTime.Now));
+var silence = await j.Fact(new Item(villains, "Silence", DateTime.Now));
+
+var completed = await j.Fact(new Completed(silence));
+
+Renderer.RenderFacts(daleks, cybermen, completed)
