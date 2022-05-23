@@ -2,5 +2,5 @@ digraph {
     rankdir=BT
 
     Item -> List
-    Done -> Item
+    Completed -> Item
 }
