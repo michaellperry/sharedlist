@@ -62,7 +62,7 @@ jobs:
       id: deploy-to-webapp
       uses: azure/webapps-deploy@v2
       with:
-        app-name: 'jinaga-sharedlist'
+        app-name: 'sharedlist-mlp'
         slot-name: 'production'
         publish-profile: ${{ secrets.AzureAppService_PublishProfile_16d99a033ca64dafa4ea307dfd8f288a }}
         package: .
