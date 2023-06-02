@@ -29,10 +29,10 @@ export const LogInButton = ({ }) => {
     <AppleLogin
       clientId={CLIENT_ID}
       redirectURI={REDIRECT_URI}
-      usePopup={true}
+      usePopup={false}
       callback={acceptAppleResponse} // Catch the response
       scope="email name"
-      responseMode="query"
+      responseMode="form_post"
       render={renderProps => (  //Custom Apple Sign in Button
         <button
           onClick={renderProps.onClick}
