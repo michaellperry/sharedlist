@@ -25,6 +25,7 @@ export const LogInButton = ({ }) => {
   };
 
   return (
+    <>
     <AppleLogin
       clientId={CLIENT_ID}
       redirectURI={REDIRECT_URI}
@@ -48,5 +49,7 @@ export const LogInButton = ({ }) => {
           Continue with Apple
         </button>
       )}
-    />);
+    />
+    {authResponse && <p>{JSON.stringify(authResponse)}</p>}
+    </>);
 }

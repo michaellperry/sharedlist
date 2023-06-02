@@ -1,5 +1,6 @@
 import * as React from "react";
 import { useHistory } from "react-router-dom";
+import { LogInButton } from "../login/LogInButton";
 
 export const HomePage = ({}) => {
     const [ topic, setTopic ] = React.useState("");
@@ -14,6 +15,7 @@ export const HomePage = ({}) => {
         <>
             <h2>Create and share lists</h2>
             <p>Enter a topic to create and join a list.</p>
+            <LogInButton />
             <form onSubmit={onSubmit}>
                 <label>
                     Topic
