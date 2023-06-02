@@ -48,21 +48,6 @@ interface User {
 
 export async function authenticate(req: Request, res: Response) {
   /**
-   * Example request body:
-   * {
-   *   "authorization":{
-   *     "code":"c870.0.szyt.Nhd_MQ",
-   *     "id_token":"eyJra.eyJp.Ua"
-   *   },
-   *   "user":{
-   *     "name":{
-   *       "firstName":"Michael",
-   *       "lastName":"Perry"
-   *     },
-   *     "email":"c4f5@privaterelay.appleid.com"
-   *   }
-   * }
-   * 
    * Example JWT payload:
    * {
    *   "iss": "https://appleid.apple.com",
@@ -113,7 +98,17 @@ export async function authenticate(req: Request, res: Response) {
 
     traceInfo(`Authenticated ${user.id}`);
     res.json(user); // Respond with the user
-  } catch (error) {
+
+    // TODO: Create a new JWT token signed with our own key.
+    // Replace the Apple user ID with our own.
+    // Return that token to the client.
+    // Redirect to the home page of the application.
+    // RESEARCH: How do we preserve the original URL?
+    // OPTION: Use a cookie to store the original URL.
+    // OPTION: Use a query parameter to store the original URL.
+    // OPTION: Use a session to store the original URL.
+  } catch (error: any) {
     traceError(error);
+    res.status(500).send(error.message);
   }
 }
