@@ -1,5 +1,6 @@
+import { Request, Response } from "express";
 import AppleAuth, { AppleAuthConfig } from "apple-auth";
-import {} from "jsonwebtoken";
+import { decode } from "jsonwebtoken";
 
 function loadAppleAuthConfig(): AppleAuthConfig {
   if (!process.env.AUTH_CLIENT_ID)
@@ -38,8 +39,37 @@ function getPrivateKeyInPEMFormat() {
   return "-----BEGIN PRIVATE KEY-----\n" + privateKey + "\n-----END PRIVATE KEY-----";
 }
 
-let auth = new AppleAuth(
-  loadAppleAuthConfig(),
-  getPrivateKeyInPEMFormat(),
-  "text"
-);
+interface User {
+  id: string;
+  email?: string;
+  name?: string;
+}
+
+export async function authenticate(req: Request, res: Response) {
+  try {
+    const auth = new AppleAuth(
+      loadAppleAuthConfig(),
+      getPrivateKeyInPEMFormat(),
+      "text"
+    );
+
+    //authenticate our code we recieved from apple login with our key file
+    const response = await auth.accessToken(req.body.authorization.code);
+    // decode our token
+    const idToken = decode(response.id_token);
+    if (!idToken)
+      throw new Error("Cannot decode id_token");
+    if (typeof idToken === "string")
+      throw new Error("Cannot decode id_token: got a string instead of an object");
+
+    const user: User = {
+      id: idToken.sub ?? "",
+      email: idToken.email || undefined,
+      name: req.body.user ? JSON.parse(req.body.user).name : undefined,
+    };
+
+    res.json(user); // Respond with the user
+  } catch (error) {
+    console.log(error);
+  }
+}
