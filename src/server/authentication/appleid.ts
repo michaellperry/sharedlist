@@ -47,6 +47,37 @@ interface User {
 }
 
 export async function authenticate(req: Request, res: Response) {
+  /**
+   * Example request body:
+   * {
+   *   "authorization":{
+   *     "code":"c870.0.szyt.Nhd_MQ",
+   *     "id_token":"eyJra.eyJp.Ua"
+   *   },
+   *   "user":{
+   *     "name":{
+   *       "firstName":"Michael",
+   *       "lastName":"Perry"
+   *     },
+   *     "email":"c4f5@privaterelay.appleid.com"
+   *   }
+   * }
+   * 
+   * Example JWT payload:
+   * {
+   *   "iss": "https://appleid.apple.com",
+   *   "aud": "com.qedcode.sharedlist.auth",
+   *   "exp": 1685763767,
+   *   "iat": 1685677367,
+   *   "sub": "000.362.03",
+   *   "c_hash": "rPpi",
+   *   "email": "c4f5@privaterelay.appleid.com",
+   *   "email_verified": "true",
+   *   "is_private_email": "true",
+   *   "auth_time": 1685677367,
+   *   "nonce_supported": true
+   * }
+   */
   try {
     traceInfo("Authenticating with Apple");
     traceInfo(`Authorization body: ${JSON.stringify(req.body)}`);
@@ -65,12 +96,16 @@ export async function authenticate(req: Request, res: Response) {
     if (typeof idToken === "string")
       throw new Error("Cannot decode id_token: got a string instead of an object");
 
+    const name = req.body.user?.name?.firstName && req.body.user?.name?.lastName
+      ? `${req.body.user.name.firstName} ${req.body.user.name.lastName}`
+      : undefined;
     const user: User = {
       id: idToken.sub ?? "",
       email: idToken.email || undefined,
-      name: req.body.user ? JSON.parse(req.body.user).name : undefined,
+      name: name,
     };
 
+    traceInfo(`Authenticated ${user.id}`);
     res.json(user); // Respond with the user
   } catch (error) {
     traceError(error);
