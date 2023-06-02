@@ -1,7 +1,7 @@
 import React from "react"
 import AppleLogin from 'react-apple-login'
 
-const CLIENT_ID = "com.qedcode.sharedlist";
+const CLIENT_ID = "com.qedcode.sharedlist.auth";
 const REDIRECT_URI = "https://sharedlist-mlp.azurewebsites.net/auth/apple";
 
 export const LogInButton = ({ }) => {
