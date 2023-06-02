@@ -87,9 +87,15 @@ export async function authenticate(req: Request, res: Response) {
       "text"
     );
 
-    //authenticate our code we recieved from apple login with our key file
-    const response = await auth.accessToken(req.body.authorization.code);
-    // decode our token
+    // The request is x-www-form-urlencoded. It contains a code.
+    // Get the code from the request body.
+    const code = req.body.code;
+
+    // We need to exchange that code for an access token.
+    const response = await auth.accessToken(code);
+    traceInfo(`Access token response: ${JSON.stringify(response)}`);
+
+    // Decode the token.
     const idToken = decode(response.id_token);
     if (!idToken)
       throw new Error("Cannot decode id_token");
