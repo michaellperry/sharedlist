@@ -4,6 +4,9 @@ import express from "express";
 import http from "http";
 import { configureJinaga } from "./jinaga-config";
 import { configureRoutes } from "./routes";
+import { startTracing, traceInfo } from "./tracing";
+
+startTracing();
 
 const app = express();
 const server = http.createServer(app);
@@ -16,6 +19,6 @@ configureRoutes(app);
 configureJinaga(app);
 
 server.listen(app.get("port"), () => {
-    console.log(`  App is running at http://localhost:${app.get("port")} in ${app.get("env")} mode`);
-    console.log("  Press CTRL-C to stop\n");
+    traceInfo(`  App is running at http://localhost:${app.get("port")} in ${app.get("env")} mode`);
+    traceInfo("  Press CTRL-C to stop\n");
 });

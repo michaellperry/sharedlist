@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import AppleAuth, { AppleAuthConfig } from "apple-auth";
 import { decode } from "jsonwebtoken";
+import { traceError, traceInfo } from "../tracing";
 
 function loadAppleAuthConfig(): AppleAuthConfig {
   if (!process.env.AUTH_CLIENT_ID)
@@ -47,6 +48,8 @@ interface User {
 
 export async function authenticate(req: Request, res: Response) {
   try {
+    traceInfo("Authenticating with Apple");
+    traceInfo(`Authorization body: ${JSON.stringify(req.body)}`);
     const auth = new AppleAuth(
       loadAppleAuthConfig(),
       getPrivateKeyInPEMFormat(),
@@ -70,6 +73,6 @@ export async function authenticate(req: Request, res: Response) {
 
     res.json(user); // Respond with the user
   } catch (error) {
-    console.log(error);
+    traceError(error);
   }
 }
