@@ -38,12 +38,16 @@ export function configureAuthenticationApple(app: Application) {
     privateKeyString: getPrivateKeyInPEMFormat(),
     passReqToCallback: true,
   }, (req, accessToken, refreshToken, decodedIdToken, profile, done) => {
-    traceInfo(`Apple authentication succeeded for ${decodedIdToken.sub}: ${JSON.stringify(profile)}}`);
+    traceInfo(`Apple authentication succeeded for ${JSON.stringify(decodedIdToken)}: ${JSON.stringify(profile)}}`);
     const user = {
-      id: decodedIdToken.sub,
-      email: decodedIdToken.email,
-      name: decodedIdToken.name,
-    };
+      provider: profile.provider,
+      id: profile.id,
+      profile: {
+          username: profile.username,
+          name: profile.name,
+          displayName: profile.displayName
+      }
+    }
     done(null, user);
   }));
 
