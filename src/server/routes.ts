@@ -1,20 +1,19 @@
 import path from "path";
-import express from "express";
-import { authenticate } from "./authentication/appleid";
+import { Express, Handler, static as staticFiles } from "express";
 import { traceInfo } from "./tracing";
 
-export function configureRoutes(app: express.Express) {
-    app.get(["/", "/:topic"], (req, res, next) => {
+export function configureRoutes(app: Express, authenticate: Handler) {
+    app.get("/login", (req, res, next) => {
+        traceInfo(`Serving ${req.url}`);
+        res.sendFile(path.join(__dirname, "login.html"));
+    });
+    app.get(["/", "/:topic"], authenticate, (req, res, next) => {
         traceInfo(`Serving ${req.url}`);
         res.sendFile(path.join(__dirname, "main.html"));
     });
 
-    app.use('/scripts', express.static(
+    app.use('/scripts', staticFiles(
         path.join(__dirname, "..", "scripts"),
         { maxAge: "365d" }
     ));
-
-    app.post("/auth/apple", (req, res, next) => {
-        authenticate(req, res).catch(next);
-    });
 }
