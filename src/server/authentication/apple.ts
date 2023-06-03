@@ -2,6 +2,8 @@ import { Application } from "express";
 import { use, authenticate } from "passport";
 import AppleStrategy from "passport-apple";
 import { traceError, traceInfo } from "../tracing";
+import { json } from "body-parser";
+import { decode } from "jsonwebtoken";
 
 function getPrivateKeyInPEMFormat() {
   // Get the AUTH_KEY environment variable.
@@ -37,15 +39,22 @@ export function configureAuthenticationApple(app: Application) {
     keyID: process.env.AUTH_KEY_ID,
     privateKeyString: getPrivateKeyInPEMFormat(),
     passReqToCallback: true,
-  }, (req, accessToken, refreshToken, decodedIdToken, profile, done) => {
-    traceInfo(`Apple authentication succeeded for ${JSON.stringify(decodedIdToken)}: ${JSON.stringify(profile)}}`);
+  }, (req, accessToken, refreshToken, idToken, profile, done) => {
+    // Use jsonwebtoken to decode the idToken
+    const decodedIdToken = decode(idToken as any as string);
+    if (!decodedIdToken) {
+      throw new Error("Could not decode idToken");
+    }
+    if (typeof(decodedIdToken) === "string") {
+      throw new Error("decodedIdToken is a string");
+    }
+
+    traceInfo(`Apple authentication succeeded for ${decodedIdToken.sub}`);
     const user = {
-      provider: profile.provider,
-      id: profile.id,
+      provider: "apple",
+      id: decodedIdToken.sub,
       profile: {
-          username: profile.username,
-          name: profile.name,
-          displayName: profile.displayName
+          email: decodedIdToken.email
       }
     }
     done(null, user);
