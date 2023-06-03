@@ -23,8 +23,10 @@
     "apple-auth": "^1.0.9",
     "applicationinsights": "^2.6.0",
     "body-parser": "^1.19.0",
+    "cookie-parser": "^1.4.6",
     "cors": "^2.8.5",
     "express": "^4.17.1",
+    "express-session": "^1.17.3",
     "jinaga": "^3.0.5",
     "jinaga-react": "^3.0.1",
     "jsonwebtoken": "^9.0.0",
@@ -36,8 +38,10 @@
     "react-router-dom": "^5.2.0"
   },
   "devDependencies": {
+    "@types/cookie-parser": "^1.4.3",
     "@types/cors": "^2.8.10",
     "@types/express": "^4.17.11",
+    "@types/express-session": "^1.17.7",
     "@types/jest": "^26.0.23",
     "@types/jsonwebtoken": "^9.0.2",
     "@types/passport": "^1.0.12",
