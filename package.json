@@ -9,7 +9,7 @@
   "scripts": {
     "clean": "rimraf dist/",
     "build": "webpack && tsc --project src/server && npm run build:copy",
-    "build:copy": "copyfiles -f views/login.html dist/server",
+    "build:copy": "copyfiles -f src/server/login.html dist/server",
     "start": "node dist/server/server",
     "dev": "concurrently -k \"npm:dev:server\" \"npm:dev:client\"",
     "dev:server": "tsc-watch --project src/server --onSuccess \"npm start\"",
