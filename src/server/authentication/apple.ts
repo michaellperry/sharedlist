@@ -1,7 +1,7 @@
 import { Application } from "express";
 import { use, authenticate } from "passport";
 import AppleStrategy from "passport-apple";
-import { traceInfo } from "../tracing";
+import { traceError, traceInfo } from "../tracing";
 
 function getPrivateKeyInPEMFormat() {
   // Get the AUTH_KEY environment variable.
@@ -48,8 +48,20 @@ export function configureAuthenticationApple(app: Application) {
   }));
 
   app.get('/auth', authenticate('apple'));
-  app.get('/auth/apple', authenticate('apple', {
-      successRedirect: '/',
-      failureRedirect: '/login'
-  }));
+  app.post("/auth/apple", (req, res, next) => {
+      authenticate('apple', (err: any, user: Express.User | false | null, info: object | string | Array<string | undefined>) => {
+        if (err) {
+          traceError(`Apple authentication failed: ${err}`);
+          res.redirect("/login");
+        } else {
+          if (!user) {
+            traceError(`No user returned: ${info}`);
+            res.redirect("/login");
+          } else {
+            traceInfo(`Apple authentication succeeded for user ${JSON.stringify(user)}`);
+            res.redirect("/");
+          }
+        }
+      })(req, res, next);
+    });
 }
